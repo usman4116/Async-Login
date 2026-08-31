@@ -19,6 +19,7 @@ export default function RootLayout({
   return (
     <ClerkProvider
       publishableKey={process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY || 'pk_live_Y2xlcmsudGhlYWV0aGVyc3luYy5jb20k'}
+      clerkJSUrl="https://cdn.jsdelivr.net/npm/@clerk/clerk-js@5/dist/clerk.browser.js"
       appearance={{
         baseTheme: dark,
         variables: {
