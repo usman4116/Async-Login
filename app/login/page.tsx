@@ -1,9 +1,9 @@
 'use client';
 
 import { useUser, useAuth, SignIn } from '@clerk/nextjs';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, Suspense } from 'react';
 
-export default function LoginPage() {
+function LoginContent() {
   const { isSignedIn, isLoaded, user } = useUser();
   const { getToken, userId } = useAuth();
   const [redirecting, setRedirecting] = useState(false);
@@ -66,9 +66,22 @@ export default function LoginPage() {
             <style>{`@keyframes spin { to { transform: rotate(360deg); } }`}</style>
           </div>
         ) : (
-          <SignIn routing="hash" />
+          <SignIn />
         )}
       </div>
     </main>
+  );
+}
+
+export default function LoginPage() {
+  return (
+    <Suspense fallback={
+      <main style={{ minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', background: '#070709', color: '#fff' }}>
+        <div style={{ width: '32px', height: '32px', border: '3px solid rgba(249, 115, 22, 0.2)', borderTopColor: '#f97316', borderRadius: '50%', animation: 'spin 1s linear infinite' }} />
+        <style>{`@keyframes spin { to { transform: rotate(360deg); } }`}</style>
+      </main>
+    }>
+      <LoginContent />
+    </Suspense>
   );
 }
